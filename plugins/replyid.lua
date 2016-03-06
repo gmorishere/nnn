@@ -7,7 +7,8 @@ do
       user_name = ''
     end
     local text = 'ID : '..result.from.peer_id..'\n'
-              ..' Username : '..user_name..'\n'
+              ..'Username : '..user_name..'\n'
+              ..'Name : '..first_name..'\n'
     send_large_msg(extra, text)
   end
 
