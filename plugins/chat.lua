@@ -47,9 +47,6 @@ end
 if msg.text == "bye" then
 	return "Bye Bye"
 end
-if is_sudo msg.text == "robot" then
-	return "joonam baba"
-end
 end
 
 return {
@@ -64,7 +61,6 @@ return {
 		"^[Tt]tfb$",
 		"^[Bb]ye$",
 		"^?$",
-                "^robot$",
 		"^[Ss]alam$",
 		}, 
 	run = run,
