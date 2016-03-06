@@ -14,7 +14,7 @@ do
 --------------------------------------------------------------------------------
 
   local function run(msg)
-    if msg.text == '#getid' and msg.reply_id then
+    if msg.text == '#id' and msg.reply_id then
       get_message(msg.reply_id, action_by_reply, get_receiver(msg))
     end
   end
@@ -25,7 +25,7 @@ do
     decription = 'Print user_id by_reply',
     usage = 'Reply to a message then type: !id',
     patterns = {
-      "^#getid$"
+      "^#id$"
     },
     run = run
   }
