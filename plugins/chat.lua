@@ -50,6 +50,7 @@ end
 if is_sudo msg.text == "robot" then
 	return "joonam baba"
 end
+end
 
 return {
 	description = "Chat With Robot Server", 
