@@ -23,7 +23,7 @@ end
 if msg.text == "shahab" then
 	return "با باباییم چیکار داری"
 end
-if msg.text == "SHAHAB" then
+if msg.text == "شهاب" then
 	return "با باباییم چیکار داری"
 end
 if msg.text == "Tfb" then
@@ -56,7 +56,7 @@ return {
 		"^[Hh]i$",
 		"^[Hh]ello$",
 		"^[Ss]hahab$",
-		"^SHAHAB$",
+		"^شهاب$",
 		"^[Bb]ot$",
 		"^[Tt]tfb$",
 		"^[Bb]ye$",
