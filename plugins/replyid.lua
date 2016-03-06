@@ -6,7 +6,7 @@ do
     else
       user_name = ''
     end
-    local text = 'ID : '..result.from.peer_id..'\n'
+    local text = 'User ID : '..result.from.peer_id..'\n'
               ..'Username : '..user_name..'\n'
     send_large_msg(extra, text)
   end
