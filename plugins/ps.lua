@@ -299,7 +299,7 @@ local function show_group_settings(msg, data)
         for k,v in pairs(data[tostring(msg.to.id)]['blocked_words']) do
             wordlist = wordlist..' / '..k
         end
-        local text = "Group settings🚨:\nLock group name🔠 : "..settings.lock_name.."\nLock group photo🎆 : "..settings.lock_photo.."\nLock group member 🚀: "..settings.lock_member.."\nLock bot🚀 : "..settings.lock_bot.."\nLock share link 🚀: "..settings.lock_link.."\nLock for public 🚀: "..settings.lock_inviteme.."\nAnti sticker 🚀: "..settings.lock_sticker.."\nLock share image 🚀: "..settings.lock_image.."\nLock share file 🚀: "..settings.lock_file.."\n\nBlocked words : "..wordlist
+        local text = "Group settings🚨:\nLock group share video:🎆 "..settings.lock_video.."\n Lock group share audio🎆 : "..settings.lock_audio.."\nLock group name🔠 : "..settings.lock_name.."\nLock group photo🎆 : "..settings.lock_photo.."\nLock group member 🚀: "..settings.lock_member.."\nLock bot🚀 : "..settings.lock_bot.."\nLock share link 🚀: "..settings.lock_link.."\nLock for public 🚀: "..settings.lock_inviteme.."\nAnti sticker 🚀: "..settings.lock_sticker.."\nLock share image 🚀: "..settings.lock_image.."\nLock share file 🚀: "..settings.lock_file.."\n\nBlocked words : "..wordlist
         return text
     else
         local settings = data[tostring(msg.to.id)]['settings']
@@ -369,30 +369,30 @@ local function unlock_group_image(msg, data)
     end
 end
 
---[[local function lock_group_video(msg, data)
+local function lock_group_video(msg, data)
     if not is_momod(msg) then
         return "For moderators only!"
     end
-    local group_video_lock = data[tostring(msg.to.id)]['settings']['lock_sticker']
+    local group_video_lock = data[tostring(msg.to.id)]['settings']['lock_video']
     if group_video_lock == 'yes' then
-        return 'Anti sticker already enabled'
+        return 'video already enabled'
     else
-        data[tostring(msg.to.id)]['settings']['lock_sticker'] = 'yes'
+        data[tostring(msg.to.id)]['settings']['lock_video'] = 'yes'
         save_data(_config.moderation.data, data)
     end
-    return 'Anti sticker has been enabled'
+    return 'Anti video has been enabled'
 end
 local function unlock_group_video(msg, data)
     if not is_momod(msg) then
         return "For moderators only!"
     end
-    local group_video_lock = data[tostring(msg.to.id)]['settings']['lock_sticker']
+    local group_video_lock = data[tostring(msg.to.id)]['settings']['lock_video']
     if group_video_lock == 'no' then
-        return 'Anti sticker is not enabled'
+        return 'Anti video is not enabled'
     else
-        data[tostring(msg.to.id)]['settings']['lock_sticker'] = 'no'
+        data[tostring(msg.to.id)]['settings']['lock_video'] = 'no'
         save_data(_config.moderation.data, data)
-    return 'Anti sticker has been disabled'
+    return 'Anti video has been disabled'
     end
 end
 local function lock_group_audio(msg, data)
@@ -420,7 +420,7 @@ local function unlock_group_audio(msg, data)
         save_data(_config.moderation.data, data)
     return 'Lock audio has been disabled'
     end
-end]]
+end
 
 local function lock_group_file(msg, data)
     if not is_momod(msg) then
@@ -797,7 +797,7 @@ function run(msg, matches)
             if matches[1] == 'rules' then
                 return get_rules(msg, data)
             end
-            if matches[1] == 'close' then --group lock *
+            if matches[1] == 'lock' then --group lock *
                 if matches[2] == 'name' then
                     return lock_group_name(msg, data)
                 end
@@ -832,7 +832,7 @@ function run(msg, matches)
                 	return lock_group_all(msg, data)
                 end
             end
-            if matches[1] == 'open' then --group unlock *
+            if matches[1] == 'unlock' then --group unlock *
                 if matches[2] == 'name' then
                     return unlock_group_name(msg, data)
                 end
@@ -937,7 +937,7 @@ function run(msg, matches)
             if matches[1] == 'rules' then
                 return get_rules(msg, data)
             end
-            if matches[1] == 'close' then --group lock *
+            if matches[1] == 'lock' then --group lock *
                 --[[if matches[2] == 'name' then
                     return lock_group_name(msg, data)
                 end
@@ -972,7 +972,7 @@ function run(msg, matches)
                 --	return lock_group_all(msg, data)
                 --end
             end
-            if matches[1] == 'open' then --group unlock *
+            if matches[1] == 'unlock' then --group unlock *
                 --[[if matches[2] == 'name' then
                     return unlock_group_name(msg, data)
                 end
@@ -1061,19 +1061,19 @@ return {
           "/setrules <rules> : Set group rules",
           "/setname <new_name> : Set group name",
           "/setphoto : Set group photo",
-          "/<close|open> name : Lock/unlock group name",
-          "/<close|open> photo : Lock/unlock group photo",
-          "/<close|open> member : Lock/unlock group member",
-          "/<close|open> spam : Enable/disable spam protection",
-          "/<close|open> sticker : Enable/disable anti sticker",
-          "/<close|open> antilink : Enable/disable anti link",
+          "/<lock|unlock> name : Lock/unlock group name",
+          "/<lock|unlock> photo : Lock/unlock group photo",
+          "/<lock|unlock> member : Lock/unlock group member",
+          "/<lock|unlock> spam : Enable/disable spam protection",
+          "/<lock|unlock> sticker : Enable/disable anti sticker",
+          "/<lock|unlock> antilink : Enable/disable anti link",
           "/group settings : Show group settings",
           "/join <group id> : Join to any group by ID (if not locked)",
           },
       },
   patterns = {
-    "^/(blockword) (.+)$",
-    "^/(unblockword) (.+)$",
+    "^[!/#](blockword) (.+)$",
+    "^[/!#](unblockword) (.+)$",
     --"^/(getlink)$",
     --"^/(relink) (.+)$",
     --"^/(setabout) (.*)$",
@@ -1082,8 +1082,8 @@ return {
     --"^/(rules)$",
     --"^/(setname) (.*)$",
     --"^/(setphoto)$",
-    "^/(close) (.*)$",
-    "^/(open) (.*)$",
+    "^[/!#](lock) (.*)$",
+    "^[/!#](unlock) (.*)$",
     "^/(settings) (+)$",
     --"^/(join) (.+)$",
     "%[(photo)%]",
